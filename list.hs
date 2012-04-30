@@ -136,3 +136,14 @@ slice (x:xs) p1 p2 = slice xs (p1 - 1) (p2 - 1)
 -- and with hight order functions
 slice' :: [a] -> Int -> Int -> [a]
 slice' list p1 p2 = drop (p1 - 1) (take p2 list)
+
+-- problem 19
+rotate :: [a] -> Int -> [a]
+rotate [] _ = []
+rotate x 0 = x
+rotate list n 
+	| n > len = rotate list (n - len)
+	| n < 0 = rotate list (n + len)
+	| otherwise = f2 ++ f1 
+	where 	len = length list
+		(f1, f2) = splitAt n list
