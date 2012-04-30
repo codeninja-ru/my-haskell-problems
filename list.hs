@@ -122,3 +122,17 @@ split all@(x:xs) count
     | otherwise = ([], all)
     where (n1, n2) = split xs (count - 1)
 --split list n1 n2 = take (n2 - n1) (drop (n1 - 1) list)
+
+-- problem 18
+slice :: [a] -> Int -> Int -> [a]
+slice [] _ _ = []
+slice list 1 count = take' count list
+	where 
+		take' _ [] = []
+		take' 1 (x:_) = [x]
+		take' count (x:xs) = x:take (count - 1) xs
+slice (x:xs) p1 p2 = slice xs (p1 - 1) (p2 - 1)
+
+-- and with hight order functions
+slice' :: [a] -> Int -> Int -> [a]
+slice' list p1 p2 = drop (p1 - 1) (take p2 list)
