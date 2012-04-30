@@ -147,3 +147,8 @@ rotate list n
 	| otherwise = f2 ++ f1 
 	where 	len = length list
 		(f1, f2) = splitAt n list
+
+-- Problem 20
+removeAt :: Int -> [a] -> (a, [a])
+removeAt n list = (last f1, (tail f1) ++ f2)
+	where (f1, f2) = splitAt (n + 1) list
