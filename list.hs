@@ -152,3 +152,11 @@ rotate list n
 removeAt :: Int -> [a] -> (a, [a])
 removeAt n list = (last f1, (tail f1) ++ f2)
 	where (f1, f2) = splitAt (n + 1) list
+
+
+-- problem 21
+insertAt :: a -> [a] -> Int -> [a]
+insertAt s xs 1 = s:xs
+insertAt s (x:xs) num = x:insertAt s xs (num - 1)
+
+insertAt' s list num = f1 ++ s:f2 where (f1, f2) = splitAt (num - 1) list
