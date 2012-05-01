@@ -160,3 +160,7 @@ insertAt s xs 1 = s:xs
 insertAt s (x:xs) num = x:insertAt s xs (num - 1)
 
 insertAt' s list num = f1 ++ s:f2 where (f1, f2) = splitAt (num - 1) list
+
+-- problem 22
+range :: Int -> Int -> [Int]
+range first last = [first..last]
