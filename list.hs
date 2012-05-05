@@ -1,4 +1,5 @@
 import System.Random
+import Data.List
 
 myLast :: [a] -> a
 myLast [] = error "fuck"
@@ -177,3 +178,7 @@ rnd_select xs n = rnd xs n $ mkStdGen 10
 				(num, new_gen) = randomR (0, (length xs) - 1) gen
 				r = xs !! num
 				xss = map snd (filter (\(x,_) -> x /= num) (zip [0..] xs))
+
+rnd_select' :: [a] -> Int -> [a]
+rnd_select' xs n = map (xs!!) ns
+	where ns = take n . nub $ randomRs (0, length xs - 1) (mkStdGen 10)
