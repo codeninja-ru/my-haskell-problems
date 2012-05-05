@@ -1,3 +1,5 @@
+import System.Random
+
 myLast :: [a] -> a
 myLast [] = error "fuck"
 myLast [x] = x
@@ -115,12 +117,12 @@ dropEvery _ 0 = []
 dropEvery list num = (take (num - 1) list) ++ dropEvery (drop 3 list) num 
 
 -- problem 17
-split :: [a] -> Int -> ([a], [a])
-split [] _ = ([], [])
-split all@(x:xs) count
+split' :: [a] -> Int -> ([a], [a])
+split' [] _ = ([], [])
+split' all@(x:xs) count
     | count > 0 = (x:n1, all)
     | otherwise = ([], all)
-    where (n1, n2) = split xs (count - 1)
+    where (n1, n2) = split' xs (count - 1)
 --split list n1 n2 = take (n2 - n1) (drop (n1 - 1) list)
 
 -- problem 18
@@ -164,3 +166,14 @@ insertAt' s list num = f1 ++ s:f2 where (f1, f2) = splitAt (num - 1) list
 -- problem 22
 range :: Int -> Int -> [Int]
 range first last = [first..last]
+
+--problem 23
+rnd_select :: [a] -> Int -> [a]
+rnd_select xs n = rnd xs n $ mkStdGen 10
+	where 	rnd [] _ _ = []
+		rnd _ 0 _ = []
+		rnd xs n gen = r:rnd xss (n - 1) new_gen
+			where
+				(num, new_gen) = randomR (0, (length xs) - 1) gen
+				r = xs !! num
+				xss = map snd (filter (\(x,_) -> x /= num) (zip [0..] xs))
