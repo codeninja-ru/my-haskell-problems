@@ -185,3 +185,10 @@ rnd_select' xs n = map (xs!!) ns
 
 -- problem 24
 diff_select count m = take count $ randomRs (1, m) (mkStdGen 10)
+
+diff_selectIO :: Int -> Int -> IO [Int]
+diff_selectIO 0 _ = return []
+diff_selectIO c m = do
+			r <- randomRIO (1, m) :: IO Int
+			next <- diff_selectIO (c - 1) m
+			return (r:next)
