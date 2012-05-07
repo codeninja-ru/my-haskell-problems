@@ -182,3 +182,6 @@ rnd_select xs n = rnd xs n $ mkStdGen 10
 rnd_select' :: [a] -> Int -> [a]
 rnd_select' xs n = map (xs!!) ns
 	where ns = take n . nub $ randomRs (0, length xs - 1) (mkStdGen 10)
+
+-- problem 24
+diff_select count m = take count $ randomRs (1, m) (mkStdGen 10)
