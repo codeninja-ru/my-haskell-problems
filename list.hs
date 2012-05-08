@@ -153,7 +153,7 @@ rotate list n
 
 -- Problem 20
 removeAt :: Int -> [a] -> (a, [a])
-removeAt n list = (last f1, (tail f1) ++ f2)
+removeAt n list = (last f1, (init f1) ++ f2)
 	where (f1, f2) = splitAt (n + 1) list
 
 
@@ -192,3 +192,17 @@ diff_selectIO c m = do
 			r <- randomRIO (1, m) :: IO Int
 			next <- diff_selectIO (c - 1) m
 			return (r:next)
+
+-- problem 25
+-- Generate a random permutation of the elements of a list. 
+rnd_permu :: [a] -> IO [a]
+rnd_permu x = do
+	gen <- newStdGen
+	return (rnd_permu' x gen)
+	where 	rnd_permu' x gen = map (x!!) (take (length x) (nub (randomRs (0, length x - 1) gen :: [Int])))
+
+rnd_permu'' :: (RandomGen g) => [a] -> g -> [a]
+rnd_permu'' [] _ = []
+rnd_permu'' xs gen = elem:rnd_permu'' nxs new_gen
+	where 	(elem, nxs) = removeAt idx xs
+		(idx, new_gen) = randomR (0, length xs - 1) gen
