@@ -206,3 +206,17 @@ rnd_permu'' [] _ = []
 rnd_permu'' xs gen = elem:rnd_permu'' nxs new_gen
 	where 	(elem, nxs) = removeAt idx xs
 		(idx, new_gen) = randomR (0, length xs - 1) gen
+
+-- problem 26
+combinations :: (Eq a) => Int -> [a] -> [[a]]
+combinations 0 _ = [[]]
+combinations c xs =
+		 let	
+			do_comb 1 xs ys = ys
+			do_comb n xs ys = do_comb (n - 1) xs (comb n xs ys)
+			comb n xs ys = [x:y | (x, y) <- zip (rep (length ys) xs) (cycle ys), not (elem x y)]
+			-- повтоярет массив n раз 
+			-- rep 2 abc = aabbcc
+			rep _  [] = []
+			rep n (x:xs) = (replicate n x) ++ rep n xs
+		in do_comb c xs (map (:[]) xs)
