@@ -220,3 +220,4 @@ combinations c xs =
 			rep _  [] = []
 			rep n (x:xs) = (replicate n x) ++ rep n xs
 		in do_comb c xs (map (:[]) xs)
+
